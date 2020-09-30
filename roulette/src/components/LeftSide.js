@@ -1,13 +1,14 @@
 import React from 'react'
-import RoulletWheel from './RoulletWheel'
-import SpinButton from './SpinButton'
+import RoulletWheel from './Wheel/RoulletWheel'
+import SpinButton from './Wheel/SpinButton'
 import BetControl from './Bets/BetControl'
 
 class LeftSide extends React.Component {
     constructor() {
         super()
         this.state = {
-            spinning: false
+            spinning: false,
+            deg: 0
         }
         this.handleClick = this.handleClick.bind(this)
     }
@@ -15,16 +16,24 @@ class LeftSide extends React.Component {
     handleClick() {
         this.setState(prevState => {
             return {
-                spinning: !prevState.spinning
+                spinning: !prevState.spinning,
+                deg: Math.floor(5000 + Math.random()*5000),
             }
         })
     }
     render() {
+
+        const spinStyle = {
+            transition: 'all 10s ease-out',
+            transform: `rotate(${this.state.deg}deg)`
+        }
+        
     return (
-        <div style={{marginRight: '5%'}}>
-            <RoulletWheel className={`box ${this.state.spinning ? 'spin' : ''}`}/>
+        <div className='margin'>
+            <RoulletWheel className={`box ${this.state.spinning ? 'spin' : ''}`} style={this.state.spinning ? spinStyle : {}}/>
             <SpinButton handleClick={this.handleClick}/>
             <BetControl />
+
 
         </div>
     )

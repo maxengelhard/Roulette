@@ -1,9 +1,14 @@
 import React from 'react'
 
 const Bets = (props) => {
+    let head = []
+    for (let key in props.bets.bet) {
+        head.push(key,props.bets.bet[key])
+    }
+    
     return (
-        <div>
-            {props.bets}
+        <div className='bets'>
+            {head}
         </div>
     )
 }

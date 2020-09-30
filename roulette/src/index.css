@@ -66,8 +66,8 @@ span p {
   text-align: center;
 }
 
-
-@-webkit-keyframes rotating /* Safari and Chrome */ {
+/*
+@-webkit-keyframes rotating {
   from {
     -webkit-transform: rotate(0deg);
     -o-transform: rotate(0deg);
@@ -96,6 +96,7 @@ span p {
   }
 }
 
+
 .spin {
   -webkit-animation: rotating 5s linear infinite;
   -moz-animation: rotating 5s linear infinite;
@@ -103,6 +104,8 @@ span p {
   -o-animation: rotating 5s linear infinite;
   animation: rotating 5s linear infinite;
 }
+
+*/
 
 .wrapper {
   height: 450px;
@@ -187,4 +190,13 @@ td {
 
 .balance {
   border: 1px dotted white;
+}
+
+.bets {
+  color: white;
+  border: 1px solid white;
+}
+
+.margin {
+  margin-right: 5%;
 }

@@ -18,7 +18,7 @@ const RoulletWheel = (props) => {
         />)
     return (
         <div className="mainbox">
-            <div className={props.className}>
+            <div className={props.className} style={props.style}>
                {wheel}
             </div>
         </div>
