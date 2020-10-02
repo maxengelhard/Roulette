@@ -15,16 +15,11 @@ class BetTable extends React.Component {
 
     onClick(bet) {
         this.setState((prevState) => {
-            let updatedBets = {bet, ...prevState.bet}
-            const newBetKey = Object.keys(updatedBets.bet)[0]
-            for (let key in updatedBets) {
-                if (key !== 'bet' && newBetKey === key) {
-                    updatedBets[key] += prevState.bet[key]
-                }
-            }
-
-            return updatedBets
+            return {...prevState.bet, bet}
         })
+    }
+    componentDidUpdate(prevProps,prevState) {
+        // itereate over the prevState
     }
     render() {
         console.log(this.state)
@@ -41,7 +36,7 @@ class BetTable extends React.Component {
             <TableCell className='first12' row='2/6' column='2' label='1st 12'bet={payouts['First Dozen']} onClick={this.onClick}/>
             <TableCell className='second12' row='6/10' column='2' label='2nd 12'bet={payouts['Second Dozen']} onClick={this.onClick}/>
             <TableCell className='third12' row='10/14' column='2' label='3rd 12'bet={payouts['Third Dozen']} onClick={this.onClick}/>
-            <TableCell className='largeTable' row='1/14' column='3/6' label={<LargeTable />} bet={payouts['Single Bet']} onClick={this.onClick}/>
+            <TableCell className='largeTable' row='1/14' column='3/6' label={<LargeTable onClick={this.onClick} bet={payouts['Straight Up']}/>} onClick={this.onClick} />
             <TableCell className='twoToOne' row='14' column='3/3' label='2 To 1' bet={payouts['Column-1']} onClick={this.onClick}/>
             <TableCell className='twoToOne' row='14' column='4/4' label='2 To 1' bet={payouts['Column-2']} onClick={this.onClick}/>
             <TableCell className='twoToOne' row='14' column='5/5' label='2 To 1' bet={payouts['Column-3']} onClick={this.onClick}/>

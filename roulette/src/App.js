@@ -1,14 +1,14 @@
 import React from 'react';
 import BetTable from './components/Table/BetTable';
-import LeftSide from './components/LeftSide'
 import Header from './components/Header'
+import WheelControl from './components/WheelControl';
 
 function App() {
   return (
     <div>
       <Header />
       <div style={{display: 'flex'}}>
-      <LeftSide />
+      <WheelControl />
       <BetTable />
       </div>
       

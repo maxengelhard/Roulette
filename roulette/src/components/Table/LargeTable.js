@@ -1,6 +1,6 @@
 import React from 'react'
 
-const LargeTable = () => {
+const LargeTable = (props) => {
     let tableArr = [];
     let currentNum = 1;
     while(currentNum <=36) {
@@ -9,13 +9,13 @@ const LargeTable = () => {
     }
     const table = tableArr.map((num,key) =>  {
         return (
-           <tr key={key}><td><button>{num[0]}</button></td><td><button>{num[1]}</button></td><td><button>{num[2]}</button></td></tr> 
+           <tr key={key}><td><button onClick={() => props.onClick(props.bet)}>{num[0]}</button></td><td><button onClick={() => props.onClick(props.bet)}>{num[1]}</button></td><td><button onClick={() => props.onClick(props.bet)}>{num[2]}</button></td></tr> 
         )
     })
     return (
             <table> 
                 <tbody>
-                <tr><td colSpan='3'><button>0</button></td></tr>
+                <tr><td colSpan='3'><button onClick={() => props.onClick(props.bet)}>0</button></td></tr>
                      {table}
                 </tbody>
             </table>

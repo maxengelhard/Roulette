@@ -16,11 +16,12 @@ class BetControl extends React.Component {
 
     }
 
-    render() {
+    render(props) {
     return (
         <div className='bet'>
             <Balance balance={this.state.balance}/>
             <BetAmount />
+            {this.props.winner}
             
         </div>
     )
