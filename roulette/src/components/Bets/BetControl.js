@@ -1,28 +1,27 @@
 import React from 'react'
-import BetAmount from './BetAmount'
 import Balance from './Balance'
+import TotalBet from './TotalBet'
 
 class BetControl extends React.Component {
     constructor() {
         super()
         this.state ={
-            betAmount: 0,
-            balance: 0
+            balance: 1000,
+            bet: 50,
         }
-        this.handleChange = this.handleChange.bind(this)
-    }
-
-    handleChange() {
-
     }
 
     render(props) {
     return (
+        <div style={{display: 'flex', color: 'white'}}>
         <div className='bet'>
             <Balance balance={this.state.balance}/>
-            <BetAmount />
+            <TotalBet totalbet={this.state.bet} />
+            </div>
+            <div>
+            <p>Winning Bet</p>
             {this.props.winner}
-            
+            </div>            
         </div>
     )
     }

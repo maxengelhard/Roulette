@@ -1,14 +1,28 @@
 import React from 'react'
 
 const Bets = (props) => {
-    let head = []
-    for (let key in props.bets.bet) {
-        head.push(key,props.bets.bet[key])
-    }
-    
+    let theirBets = []
+    if (props.bets.bets) {
+        theirBets = props.bets.bets.filter(obj => {
+            if (Object.values(obj)[0] > 0) {
+                return (
+                    true
+                )
+            } else return false
+        })
+        
+    } 
+
+    const final = theirBets.map((obj,index) => {
+        return (
+        <div key={index} className='thisBet'>{Object.keys(obj)[0]} {Object.values(obj)[0]}</div>
+        )
+    })
+
     return (
         <div className='bets'>
-            {head}
+            <div className='betHeader'>Your Bets</div>
+          {final}
         </div>
     )
 }

@@ -100,7 +100,7 @@ class WheelControl extends React.Component {
     }
 
 
-    render() {
+    render(props) {
 
         const spinStyle = {
             transition: 'all 10s ease-out',
@@ -114,10 +114,10 @@ class WheelControl extends React.Component {
 
         
     return (
-        <div className='margin'>
+        <div className='leftSide'>
             <RoulletWheel className='box' style={this.state.spinning ? spinStyle : {}} ballStyle={this.state.spinning ? ballStyle: {}}/>
             <SpinButton handleClick={this.handleClick} disabled={this.state.spinning}/>
-            <BetControl winner={this.state.finished ? this.state.whoWon : ''}/>
+            <BetControl winner={this.state.finished ? this.state.whoWon : ''} />
         </div>
     )
     }

@@ -11,6 +11,14 @@ body {
   margin-bottom: 20px;
 }
 
+.main {
+  display: flex
+}
+
+.leftSide {
+  margin-right: 5%;
+}
+
 
 .mainbox {
   position: relative;
@@ -156,12 +164,24 @@ td {
   padding: 0;
 }
 
+.wrapper button:hover {
+ filter: brightness(1.25);
+}
+
 .red button {
   background-color: transparent;
+  
+} 
+.red:hover {
+  filter: brightness(1.25)
 }
 
 .black button {
   background-color: transparent;
+} 
+
+.black:hover {
+  filter: brightness(1.25)
 }
 
 .bet {
@@ -187,10 +207,44 @@ td {
 }
 
 .bets {
-  color: white;
-  border: 1px solid white;
+  color: white
 }
 
-.margin {
-  margin-right: 5%;
+.thisBet {
+  border: 1px solid white;
+  margin-top: 3px;
+  margin-bottom: 3px;
+  padding-left: 5px;
+  width: 96%;
+}
+
+.playerBets {
+  width: 100px;
+  height: 100%;
+  border: 1px solid red;
+  margin-right: 25px;
+}
+
+.betHeader {
+  width: 100%;
+  text-align: center;
+  font-size: 16px;
+  padding-bottom: 10px;
+  padding-top: 5px;
+}
+
+.bet p {
+  margin: 5px;
+}
+
+.betAmount button {
+  border-radius: 50%;
+  height: 35px;
+  width: 35px;
+  color: white;
+}
+
+button img {
+  width: 70%;
+  height: 70%;
 }

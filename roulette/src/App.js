@@ -7,7 +7,7 @@ function App() {
   return (
     <div>
       <Header />
-      <div style={{display: 'flex'}}>
+      <div className='main'>
       <WheelControl />
       <BetTable />
       </div>

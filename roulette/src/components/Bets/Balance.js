@@ -3,8 +3,7 @@ import React from 'react'
 const Balance = (props) => {
     return (
         <div className='balance'>
-            <p>Balance</p>
-            {props.balance}
+            <p>Balance <br/> {props.balance}</p>
         </div>
     )
 }
