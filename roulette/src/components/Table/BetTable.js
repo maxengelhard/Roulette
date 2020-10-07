@@ -16,12 +16,12 @@ const BetTable = (props) =>  {
         <div style={{display: 'flex'}}>
         <div>
         <div className="wrapper" style={{color: 'white', textAlign: 'center'}}>
-            <TableCell className='high' row='2/4' column='1' label={label(4) ? label(4) :'1 To 18'} bet={payouts[4]} count={1}onClick={props.onClick}/>
+            <TableCell className='low' row='2/4' column='1' label={label(4) ? label(4) :'1 To 18'} bet={payouts[4]} count={1}onClick={props.onClick}/>
             <TableCell className='even' row='4/6' column='1' label={label(3) ? label(3) : 'EVEN'} bet={payouts[3]} onClick={props.onClick}/>
             <TableCell className='red' row='6/8' column='1' label={label(0) ? label(0) : <div className='redDiamond' />} bet={payouts[0]} onClick={props.onClick}/>
             <TableCell className='black' row='8/10' column='1' label={label(1) ? label(1) :<div className='blackDiamond' />} bet={payouts[1]} onClick={props.onClick}/>
             <TableCell className='odd' row='10/12' column='1' label={label(2) ? label(2) :'ODD'} bet={payouts[2]} onClick={props.onClick}/>
-            <TableCell className='low' row='12/14' column='1' label={label(5) ? label(5) :'19 To 36'} bet={payouts[5]} onClick={props.onClick}/>
+            <TableCell className='high' row='12/14' column='1' label={label(5) ? label(5) :'19 To 36'} bet={payouts[5]} onClick={props.onClick}/>
             <TableCell className='firstDozen' row='2/6' column='2' label={label(9) ? label(9) :'1st 12'} bet={payouts[9]} onClick={props.onClick}/>
             <TableCell className='secondDozen' row='6/10' column='2' label={label(10) ? label(10) : '2nd 12'} bet={payouts[10]} onClick={props.onClick}/>
             <TableCell className='thirdDozen' row='10/14' column='2' label={label(11) ? label(11) :'3rd 12' } bet={payouts[11]} onClick={props.onClick}/>

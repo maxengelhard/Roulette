@@ -80,11 +80,11 @@ const checkWinner = (num,arr) => {
             // check if they hit the number
             if (key ===num) {
                 acum += value
-                flash(num)
+                flash(`button${key}`)
             }
         } else if (key ===num) {
             acum += value
-            flash(num)
+            flash(`button${key}`)
         }
     }
 

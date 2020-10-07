@@ -15,6 +15,7 @@ class App extends React.Component {
     this.state = {
         // for the spinning wheel
         spinning: false,
+        disabled: false,
         degWheel: 0,
         degBall: 0,
         finished: false,
@@ -41,6 +42,7 @@ handleClick() {
     this.setState(prevState => {
         return {
             spinning: true,
+            disabled: true,
             degWheel: Math.floor(5000 + Math.random()*5000),
             degBall: Math.floor(2500 + Math.random()*2500),
         }
@@ -65,6 +67,7 @@ handleClick() {
                 return {
                     ...prevState,
                     spinning: false,
+                    disabled: false,
                     degWheel: 0,
                     degBall: 0,
                     finished: false,
@@ -161,6 +164,8 @@ changeAmount(wager) {
 }
 
 render() {
+  
+    document.querySelectorAll('button').forEach(button => button.style.pointerEvents = this.state.disabled ? 'none': 'auto')
 
   return (
     <div>
