@@ -35,6 +35,7 @@ class App extends React.Component {
     this.changeAmount = this.changeAmount.bind(this)
 }
 
+
 /////////////// For the spinning wheel
 
 handleClick() {
@@ -50,6 +51,7 @@ handleClick() {
     // create a new promise to wait for when it is finished spinning
     const finished = () => {
         return new Promise(resolve => {
+          // finish the spin
             setTimeout(() => {
                 resolve(this.setState(prevState => {
                     return {
@@ -91,8 +93,13 @@ handleClick() {
 }
 
 componentDidUpdate(prevProps, prevState) {
-    // to update my rotations array
+  
+  const table = document.querySelector('.wrapper')
+    
+  // to update my rotations array  
     if (this.state.spinning) {
+      // then make all bets unavailable
+    table.querySelectorAll('button,.red,.black').forEach(button => button.style.pointerEvents = 'none')
     if (prevState.degWheel !== this.state.degWheel) {
         this.setState((prevState) => {
             return {
@@ -120,7 +127,26 @@ componentDidUpdate(prevProps, prevState) {
             }
         })
     }
-} return false
+} 
+// else we can change other things
+// check to see if the bet amount is more than the balance
+else if (this.state.betAmount !== prevState.betAmount || this.state.balance !== prevState.balance) {
+  const wagers = document.querySelector(`.betAmount`)
+  if (this.state.betAmount > this.state.balance) {
+    table.querySelectorAll('button,.red,.black').forEach(button => button.style.pointerEvents = 'none')
+    wagers.querySelectorAll('button').forEach(button => {
+      if (button.value > this.state.balance) {
+        button.style.pointerEvents = 'none'
+      } 
+    })
+  } else {
+    table.querySelectorAll('button,.red,.black').forEach(button => button.style.pointerEvents = 'auto')
+    wagers.querySelectorAll('button').forEach(button => button.style.pointerEvents = 'auto')
+  }
+} else table.querySelectorAll('button,.red,.black').forEach(button => button.style.pointerEvents = 'auto')
+
+
+return false
 
 }
 
@@ -164,8 +190,6 @@ changeAmount(wager) {
 }
 
 render() {
-  
-    document.querySelectorAll('button').forEach(button => button.style.pointerEvents = this.state.disabled ? 'none': 'auto')
 
   return (
     <div>
@@ -189,6 +213,7 @@ render() {
       bets={this.state.bets}
       startBetting={this.state.startBetting}
       betAmount={this.state.betAmount}
+      balance={this.state.balance}
       totalBet={this.state.totalBet}
       onClick={this.makeBet}
       changeAmount={this.changeAmount}
