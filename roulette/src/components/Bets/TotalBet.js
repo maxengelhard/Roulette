@@ -2,8 +2,8 @@ import React from 'react'
 
 const TotalBet = (props) => {
     return (
-        <div>
-            <p>Total Bet <br/> {props.totalbet}</p>
+        <div className='totalBet'>
+            <p>Total Bet <br/> {props.totalBet}</p>
         </div>
     )
 }

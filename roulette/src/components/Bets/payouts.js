@@ -1,4 +1,5 @@
-const payouts = [
+let counter = 0
+let payouts = [
     {'Red': 1},
     {'Black': 1},
     {'Odd': 1},
@@ -18,4 +19,10 @@ const payouts = [
     {'Five Number Bet':6},
     {'Siz Number Bet':5}
 ]
+
+
+while (counter <37) {
+    payouts.push({[counter]: 35})
+    counter ++
+}
 export default payouts

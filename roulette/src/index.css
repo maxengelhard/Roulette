@@ -6,9 +6,10 @@ body {
 .header {
   width: 100%;
   border: 5px dotted red;
+  box-sizing: border-box;
   text-align: center;
   color: white;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .main {
@@ -16,6 +17,7 @@ body {
 }
 
 .leftSide {
+  margin-left: 5%;
   margin-right: 5%;
 }
 
@@ -122,6 +124,7 @@ span area {
 
 .wrapper > div {
   border: 1px solid white;
+  box-sizing: border-box;
   background-color: green;
 }
 
@@ -153,6 +156,7 @@ table {
 
 td {
   border: 1px solid white;
+  box-sizing: border-box;
 }
 
 .wrapper button {
@@ -191,16 +195,10 @@ td {
 
 .betAmount {
   border: 1px dotted white;
+  box-sizing: border-box;
 }
 
-.betAmount input {
-  padding: 1%;
-  width: 98%;
-  height: 98%;
-  background-color: rgb(54, 53, 53);
-  color: white;
-  border: none;
-}
+
 
 .balance {
   border: 1px dotted white;
@@ -247,4 +245,38 @@ td {
 button img {
   width: 70%;
   height: 70%;
+}
+
+.totalBet {
+  color: white;
+}
+
+.chip {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 2px dotted white;
+}
+
+
+.betControl {
+  color: white;
+  display: flex;
+  position: absolute;
+  bottom: 1%;
+  left: 5%;
+}
+
+.betControl > div {
+  margin-right: 10px;
+}
+
+.won {
+  animation: blink .5s linear infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
 }
