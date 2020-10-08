@@ -9,6 +9,8 @@ const BetAmount = (props) => {
         if (props.value === color[1]) {
             style.filter = 'brightness(1)'
             style.border = '2px dotted white'
+            style.boxSizing = 'border-box'
+            style.padding = '2px'
         }
        return <button key={color[1]} style={style} value={color[1]} onClick={() => props.changeAmount(color[1])}>{color[1]}</button> 
     })
