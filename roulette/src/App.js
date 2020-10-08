@@ -29,10 +29,12 @@ class App extends React.Component {
         totalBet: 0,
         // for the balance
         balance: 1000,
+        lastBet: {},
     }
     this.handleClick = this.handleClick.bind(this)
     this.makeBet = this.makeBet.bind(this)
     this.changeAmount = this.changeAmount.bind(this)
+    this.undoBet = this.undoBet.bind(this)
 }
 
 
@@ -181,7 +183,8 @@ makeBet(bet,number,e) {
           bets: updatedBets,
           startBetting: true,
           totalBet: total,
-          balance: prevState.balance - this.state.betAmount
+          balance: prevState.balance - this.state.betAmount,
+          lastBet: {[newBet]: this.state.betAmount}
       }
   })
 }
@@ -191,6 +194,29 @@ changeAmount(wager) {
       return {
           ...prevState,
           betAmount: wager,
+      }
+  })
+}
+
+undoBet() {
+  const key = Object.keys(this.state.lastBet)[0]
+  const value = Object.values(this.state.lastBet)[0]
+
+  this.setState(prevState => {
+    // find the key in the bets and subtract that
+    const updatedBets = prevState.bets.map((obj,index) => {
+      const collector = Object.keys(obj)[0]
+      if (key === collector) {
+         return { [collector] : prevState.bets[index][collector] - value*payouts[index][key]}
+      } 
+      else return obj
+  })
+      return {
+        ...prevState,
+        balance: prevState.balance + value,
+        totalBet: prevState.totalBet - value,
+        bets: updatedBets,
+        lastBet: {}
       }
   })
 }
@@ -226,6 +252,8 @@ render() {
       changeAmount={this.changeAmount}
       whoWon={this.state.whoWon}
       finished={this.state.finished}
+      undoBet={this.undoBet}
+      lastBet={this.state.lastBet}
       />
       </div>
       
