@@ -29,7 +29,7 @@ class App extends React.Component {
         totalBet: 0,
         // for the balance
         balance: 1000,
-        lastBet: {},
+        lastBet: [],
     }
     this.handleClick = this.handleClick.bind(this)
     this.makeBet = this.makeBet.bind(this)
@@ -82,6 +82,7 @@ handleClick() {
                     bets: payouts.map((obj) => {return {[Object.keys(obj)[0]] : 0}}),
                     startBetting: false,
                     totalBet: 0,
+                    lastBet: []
                 }
             })
         }, 5000)};
@@ -99,11 +100,13 @@ handleClick() {
 componentDidUpdate(prevProps, prevState) {
   
   const table = document.querySelector('.wrapper')
+  const undo = document.querySelector('.undo')
     
   // to update my rotations array  
     if (this.state.spinning) {
       // then make all bets unavailable
     table.querySelectorAll('button,.red,.black').forEach(button => button.style.pointerEvents = 'none')
+    undo.style.pointerEvents = 'none'
     if (prevState.degWheel !== this.state.degWheel) {
         this.setState((prevState) => {
             return {
@@ -135,7 +138,7 @@ componentDidUpdate(prevProps, prevState) {
 // else we can change other things
 // check to see if the bet amount is more than the balance
 else if (this.state.betAmount !== prevState.betAmount || this.state.balance !== prevState.balance) {
-  const wagers = document.querySelector(`.betAmount`)
+  const wagers = document.querySelector(`.betAmount:not(.undo)`)
   if (this.state.betAmount > this.state.balance) {
     table.querySelectorAll('button,.red,.black').forEach(button => button.style.pointerEvents = 'none')
     wagers.querySelectorAll('button').forEach(button => {
@@ -147,7 +150,10 @@ else if (this.state.betAmount !== prevState.betAmount || this.state.balance !== 
     table.querySelectorAll('button,.red,.black').forEach(button => button.style.pointerEvents = 'auto')
     wagers.querySelectorAll('button').forEach(button => button.style.pointerEvents = 'auto')
   }
-} else table.querySelectorAll('button,.red,.black').forEach(button => button.style.pointerEvents = 'auto')
+} else {
+  table.querySelectorAll('button,.red,.black').forEach(button => button.style.pointerEvents = 'auto')
+  undo.style.pointerEvents = 'auto'
+}
 
 
 return false
@@ -178,13 +184,16 @@ makeBet(bet,number,e) {
       const total = updatedBets.reduce((sum, cur, idx) => {
           return sum + cur[Object.keys(cur)[0]]/payouts[idx][Object.keys(cur)[0]]
       },0)
+
+      let lastBetArr = prevState.lastBet
+      lastBetArr.push({[newBet]: this.state.betAmount})
       return {
           ...prevState,
           bets: updatedBets,
           startBetting: true,
           totalBet: total,
           balance: prevState.balance - this.state.betAmount,
-          lastBet: {[newBet]: this.state.betAmount}
+          lastBet: lastBetArr
       }
   })
 }
@@ -199,8 +208,9 @@ changeAmount(wager) {
 }
 
 undoBet() {
-  const key = Object.keys(this.state.lastBet)[0]
-  const value = Object.values(this.state.lastBet)[0]
+  const last = this.state.lastBet.length-1
+  const key = Object.keys(this.state.lastBet[last])[0]
+  const value = Object.values(this.state.lastBet[last])[0]
 
   this.setState(prevState => {
     // find the key in the bets and subtract that
@@ -211,17 +221,19 @@ undoBet() {
       } 
       else return obj
   })
+
       return {
         ...prevState,
         balance: prevState.balance + value,
         totalBet: prevState.totalBet - value,
         bets: updatedBets,
-        lastBet: {}
+        lastBet: prevState.lastBet.slice(0,last)
       }
   })
 }
 
 render() {
+
 
   return (
     <div>
