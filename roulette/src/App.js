@@ -57,7 +57,9 @@ handleClick() {
                     return {
                       ...prevState,
                       finished: true,
-                      balance: prevState.balance + checkWinner(this.state.whoWon, this.state.bets)}
+                      balance: prevState.balance + checkWinner(this.state.whoWon, this.state.bets),
+                      totalBet: checkWinner(this.state.whoWon, this.state.bets)
+                    }
                 }))
             },10005)
         })
@@ -153,8 +155,13 @@ return false
 ////////////// For the betting table
 
 
-makeBet(bet,number) {
-
+makeBet(bet,number,e) {
+  if (e) {
+    const target = e.currentTarget.getBoundingClientRect()
+    const middle = target.x + target.width/2
+    console.log(e.clientX,middle)
+    console.log('hello!')
+  }
   this.setState((prevState) => {
       const newBet = (number || number===0) ? number: Object.keys(bet)[0]
       const updatedBets = prevState.bets.map((obj,index) => {
@@ -207,6 +214,7 @@ render() {
       winner={this.state.finished ? this.state.whoWon : ''}
       balance={this.state.balance} 
       bets={this.state.bets}
+      finished={this.state.finished}
       />
       </div>
       <BetTable 

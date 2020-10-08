@@ -18,13 +18,13 @@ const LargeTable = (props) => {
     }
     const table = tableArr.map((num,key) =>  {
         return (
-           <tr key={key}><td className={`button${num[0]}`}><button onClick={() => props.onClick(props.bet,num[0])}>{label(num[0]) ? label(num[0]) : num[0]}</button></td><td className={`button${num[1]}`}><button onClick={() => props.onClick(props.bet,num[1])}>{label(num[1]) ? label(num[1]) : num[1]}</button></td><td className={`button${num[2]}`}><button onClick={() => props.onClick(props.bet,num[2])}>{label(num[2]) ? label(num[2]) : num[2]}</button></td></tr> 
+           <tr key={key}><td className={`button${num[0]}`}><button onClick={(e) => props.onClick(props.bet,num[0],e)}>{label(num[0]) ? label(num[0]) : num[0]}</button></td><td className={`button${num[1]}`}><button onClick={(e) => props.onClick(props.bet,num[1],e)}>{label(num[1]) ? label(num[1]) : num[1]}</button></td><td className={`button${num[2]}`}><button onClick={(e) => props.onClick(props.bet,num[2],e)}>{label(num[2]) ? label(num[2]) : num[2]}</button></td></tr> 
         )
     })
     return (
             <table> 
                 <tbody>
-    <tr><td className='button0' colSpan='3'><button onClick={() => props.onClick(props.bet,0)}>{label(0) ? label(0) : 0}</button></td></tr>
+    <tr><td className='button0' colSpan='3'><button onClick={(e) => props.onClick(props.bet,0,e)}>{label(0) ? label(0) : 0}</button></td></tr>
                      {table}
                 </tbody>
             </table>

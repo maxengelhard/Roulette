@@ -9,7 +9,7 @@ const BetControl = (props)  => {
     return (
         <div className='betControl'>
             <Balance balance={props.balance}/>
-            <TotalBet totalBet={props.totalBet} />
+            <TotalBet finished={props.finished} totalBet={props.totalBet} />
             <div>
             <p>Winning Bet</p>
             {props.winner}           

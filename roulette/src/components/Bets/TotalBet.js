@@ -1,9 +1,10 @@
 import React from 'react'
 
 const TotalBet = (props) => {
+    const label = props.finished ? 'LAST WIN': 'Total Bet' 
     return (
         <div className='totalBet'>
-            <p>Total Bet <br/> {props.totalBet}</p>
+            <p>{label} <br/> {props.totalBet}</p>
         </div>
     )
 }
