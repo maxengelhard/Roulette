@@ -160,7 +160,6 @@ makeBet(bet,number,e) {
     const target = e.currentTarget.getBoundingClientRect()
     const middle = target.x + target.width/2
     console.log(e.clientX,middle)
-    console.log('hello!')
   }
   this.setState((prevState) => {
       const newBet = (number || number===0) ? number: Object.keys(bet)[0]
