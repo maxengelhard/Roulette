@@ -40,6 +40,8 @@ const BetTable = (props) =>  {
         <BetAmount 
         value={props.betAmount} 
         changeAmount={props.changeAmount}
+        undoBet={props.undoBet}
+        lastBet={props.lastBet}
         />
         </div>
         
