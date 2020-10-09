@@ -19,7 +19,7 @@ const BetAmount = (props) => {
         <div className='betAmount'>
             {betAmounts}
             <Undo undoBet={props.undoBet} disabled={props.lastBet.length > 0}/>
-            <Repeat repeatBet={props.repeatBet} repeat={props.repeat} double={props.double}/>
+            <Repeat repeatBet={props.repeatBet} repeat={props.repeat} double={props.double} disableRepeat={props.disableRepeat}/>
         </div>
     )
 }

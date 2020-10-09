@@ -7,6 +7,7 @@ import rotations from './components/Wheel/rotations'
 import numbers from './components/Wheel/numbers'
 import payouts from './components/Bets/payouts'
 import checkWinner from './components/Bets/checkwinner'
+import sumTotal from './components/Bets/sumTotal'
 
 
 class App extends React.Component {
@@ -28,8 +29,12 @@ class App extends React.Component {
         totalBet: 0,
         // for the balance
         balance: 1000,
+        // for undo
         lastBet: [],
+        // for repeat
         repeat: [],
+        repeatTotal: 0,
+        repeatLastBet: [],
     }
     this.handleClick = this.handleClick.bind(this)
     this.makeBet = this.makeBet.bind(this)
@@ -85,6 +90,8 @@ handleClick() {
                     totalBet: 0,
                     lastBet: [],
                     repeat: prevState.bets,
+                    repeatTotal: sumTotal(prevState.bets,payouts),
+                    repeatLastBet: prevState.lastBet
                     
                 }
             })
@@ -102,14 +109,16 @@ handleClick() {
 
 componentDidUpdate(prevProps, prevState) {
   
-  const table = document.querySelector('.wrapper')
+  const table = document.querySelector('.wrapper').querySelectorAll('button,.red,.black')
   const undo = document.querySelector('.undo')
+  const repeat = document.querySelector('.repeat')
     
   // to update my rotations array  
     if (this.state.spinning) {
       // then make all bets unavailable
-    table.querySelectorAll('button,.red,.black').forEach(button => button.style.pointerEvents = 'none')
+    table.forEach(button => button.style.pointerEvents = 'none')
     undo.style.pointerEvents = 'none'
+    repeat.style.pointerEvents = 'none'
     if (prevState.degWheel !== this.state.degWheel) {
         this.setState((prevState) => {
             return {
@@ -140,23 +149,28 @@ componentDidUpdate(prevProps, prevState) {
 } 
 // else we can change other things
 // check to see if the bet amount is more than the balance
-else if (this.state.betAmount !== prevState.betAmount || this.state.balance !== prevState.balance) {
-  const wagers = document.querySelector(`.betAmount:not(.undo)`)
+ else if (this.state.betAmount !== prevState.betAmount || this.state.balance !== prevState.balance || this.state.spinning !== prevState.spinning) {
+  const wagers = document.querySelector(`.betAmount`).querySelectorAll('button:not(.undo):not(.repeat)')
   if (this.state.betAmount > this.state.balance) {
-    table.querySelectorAll('button,.red,.black').forEach(button => button.style.pointerEvents = 'none')
-    wagers.querySelectorAll('button').forEach(button => {
+    table.forEach(button => button.style.pointerEvents = 'none')
+    wagers.forEach(button => {
       if (button.value > this.state.balance) {
         button.style.pointerEvents = 'none'
-      } 
+      } else {
+        button.style.pointerEvents = 'auto'
+      }
     })
   } else {
-    table.querySelectorAll('button,.red,.black').forEach(button => button.style.pointerEvents = 'auto')
-    wagers.querySelectorAll('button').forEach(button => button.style.pointerEvents = 'auto')
+    table.forEach(button => button.style.pointerEvents = 'auto')
+    wagers.forEach(button => button.style.pointerEvents = 'auto')
   }
 } else {
-  table.querySelectorAll('button,.red,.black').forEach(button => button.style.pointerEvents = 'auto')
+  table.forEach(button => button.style.pointerEvents = 'auto')
   undo.style.pointerEvents = 'auto'
+  repeat.style.pointerEvents = 'auto'
 }
+
+//// check if double will put the balance over
 
 
 return false
@@ -184,19 +198,17 @@ makeBet(bet,number,e) {
           } 
           else return obj
       })
-      const total = updatedBets.reduce((sum, cur, idx) => {
-          return sum + Object.values(cur)[0]/payouts[idx][Object.keys(cur)[0]]
-      },0)
 
       let lastBetArr = prevState.lastBet
       lastBetArr.push({[newBet]: this.state.betAmount})
       return {
           ...prevState,
           bets: updatedBets,
-          totalBet: total,
+          totalBet: sumTotal(updatedBets,payouts),
           balance: prevState.balance - this.state.betAmount,
           lastBet: lastBetArr,
           repeat: [],
+          repeatTotal: 0,
       }
   })
 }
@@ -236,18 +248,17 @@ undoBet() {
 }
 
 repeatBet() {
-
-  
   this.setState(prevState => {
-    const total = prevState.repeat.reduce((sum, cur, idx) => {
-      return sum + Object.values(cur)[0]/payouts[idx][Object.keys(cur)[0]]
-  },0)
+    // itereate over prevState to see which are greater than 0 and push them into the lastBet
     return {
       ...prevState,
       bets: prevState.repeat,
-      totalBet: total,
-      balance: prevState.balance - total,
+      totalBet: prevState.repeatTotal,
+      balance: prevState.balance - prevState.repeatTotal,
       repeat: [],
+      repeatTotal: 0,
+      lastBet: prevState.repeatLastBet,
+      repeatLastBet: [],
     }
   })
 
@@ -305,6 +316,8 @@ render() {
       repeatBet={this.repeatBet}
       double={this.double}
       repeat={this.state.repeat.length >0}
+      // check if we're repeating if we are pass down if the repeat Total is more than the balance : else see if double is more than balance
+      disableRepeat={this.state.repeat.length >0 ? this.state.repeatTotal > this.state.balance : this.state.totalBet > this.state.balance}
       />
       </div>
       

@@ -44,6 +44,7 @@ const BetTable = (props) =>  {
         repeatBet={props.repeatBet}
         double={props.double}
         repeat={props.repeat}
+        disableRepeat={props.disableRepeat}
         />
         </div>
         
