@@ -164,13 +164,13 @@ componentDidUpdate(prevProps, prevState) {
     table.forEach(button => button.style.pointerEvents = 'auto')
     wagers.forEach(button => button.style.pointerEvents = 'auto')
   }
+  if (this.state.repeatTotal < this.state.balance) {
+    repeat.style.pointerEvents = 'auto'
+  }
 } else {
   table.forEach(button => button.style.pointerEvents = 'auto')
   undo.style.pointerEvents = 'auto'
-  repeat.style.pointerEvents = 'auto'
 }
-
-//// check if double will put the balance over
 
 
 return false
