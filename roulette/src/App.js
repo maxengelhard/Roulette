@@ -24,17 +24,19 @@ class App extends React.Component {
         whoWon: false,
         // for the betting
         bets: payouts.map((obj) => {return {[Object.keys(obj)[0]] : 0}}),
-        startBetting: false,
         betAmount: 1,
         totalBet: 0,
         // for the balance
         balance: 1000,
         lastBet: [],
+        repeat: [],
     }
     this.handleClick = this.handleClick.bind(this)
     this.makeBet = this.makeBet.bind(this)
     this.changeAmount = this.changeAmount.bind(this)
     this.undoBet = this.undoBet.bind(this)
+    this.repeatBet = this.repeatBet.bind(this)
+    this.double = this.double.bind(this)
 }
 
 
@@ -80,9 +82,10 @@ handleClick() {
                     rotations : prevState.rotations.map(num => ((num - this.state.degWheel)%360 +360)%360),
                     whoWon: false,
                     bets: payouts.map((obj) => {return {[Object.keys(obj)[0]] : 0}}),
-                    startBetting: false,
                     totalBet: 0,
-                    lastBet: []
+                    lastBet: [],
+                    repeat: prevState.bets,
+                    
                 }
             })
         }, 5000)};
@@ -174,15 +177,15 @@ makeBet(bet,number,e) {
       const updatedBets = prevState.bets.map((obj,index) => {
           const collector = Object.keys(obj)[0]
           if (!isNaN(newBet) && newBet.toString() === collector) {
-            return {[collector]: prevState.bets[index][collector] + bet['Straight Up']*this.state.betAmount}
+            return {[collector]: obj[collector] + bet['Straight Up']*this.state.betAmount}
           }
           else if (newBet === collector) {
-             return { [collector] : prevState.bets[index][collector] + bet[newBet]*this.state.betAmount }
+             return { [collector] : obj[collector] + bet[newBet]*this.state.betAmount }
           } 
           else return obj
       })
       const total = updatedBets.reduce((sum, cur, idx) => {
-          return sum + cur[Object.keys(cur)[0]]/payouts[idx][Object.keys(cur)[0]]
+          return sum + Object.values(cur)[0]/payouts[idx][Object.keys(cur)[0]]
       },0)
 
       let lastBetArr = prevState.lastBet
@@ -190,10 +193,10 @@ makeBet(bet,number,e) {
       return {
           ...prevState,
           bets: updatedBets,
-          startBetting: true,
           totalBet: total,
           balance: prevState.balance - this.state.betAmount,
-          lastBet: lastBetArr
+          lastBet: lastBetArr,
+          repeat: [],
       }
   })
 }
@@ -217,7 +220,7 @@ undoBet() {
     const updatedBets = prevState.bets.map((obj,index) => {
       const collector = Object.keys(obj)[0]
       if (key === collector) {
-         return { [collector] : prevState.bets[index][collector] - value*payouts[index][key]}
+         return { [collector] : obj[collector] - value*payouts[index][key]}
       } 
       else return obj
   })
@@ -232,9 +235,43 @@ undoBet() {
   })
 }
 
+repeatBet() {
+
+  
+  this.setState(prevState => {
+    const total = prevState.repeat.reduce((sum, cur, idx) => {
+      return sum + Object.values(cur)[0]/payouts[idx][Object.keys(cur)[0]]
+  },0)
+    return {
+      ...prevState,
+      bets: prevState.repeat,
+      totalBet: total,
+      balance: prevState.balance - total,
+      repeat: [],
+    }
+  })
+
+}
+
+double() {
+  // set the state of every bet being doubled
+  this.setState(prevState => {
+    const doubled = prevState.bets.map(obj => {
+      const key = Object.keys(obj)[0]
+      return {[key] : obj[key]*2}
+    })
+    return {
+      ...prevState,
+      bets: doubled,
+      totalBet: prevState.totalBet*2,
+      balance: prevState.balance - prevState.totalBet
+    }
+  })
+  
+
+}
+
 render() {
-
-
   return (
     <div>
       <Header />
@@ -256,7 +293,6 @@ render() {
       </div>
       <BetTable 
       bets={this.state.bets}
-      startBetting={this.state.startBetting}
       betAmount={this.state.betAmount}
       balance={this.state.balance}
       totalBet={this.state.totalBet}
@@ -266,6 +302,9 @@ render() {
       finished={this.state.finished}
       undoBet={this.undoBet}
       lastBet={this.state.lastBet}
+      repeatBet={this.repeatBet}
+      double={this.double}
+      repeat={this.state.repeat.length >0}
       />
       </div>
       

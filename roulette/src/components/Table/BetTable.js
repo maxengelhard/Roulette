@@ -7,7 +7,7 @@ import BetAmount from '../Bets/BetAmount'
 const BetTable = (props) =>  {
         const label = (index) => {
             const value = Object.values(props.bets[index])[0]/Object.values(payouts[index])
-            if (props.startBetting && value >0) {
+            if (value >0) {
             return <div className='chip'style={{borderRadius: '50%', height: '25px', width: '25px', margin: 'auto',padding: 'auto', background: 'black'}}>{value}</div>
             } else return false
         }
@@ -30,7 +30,6 @@ const BetTable = (props) =>  {
             onClick={props.onClick} 
             bet={payouts[12]} 
             bets={props.bets}
-            startBetting={props.startBetting}
             />
             </div>
             <TableCell className='column-1' row='14' column='3/3' label={label(6) ? label(6) : '2 To 1'} bet={payouts[6]} onClick={props.onClick}/>
@@ -42,6 +41,9 @@ const BetTable = (props) =>  {
         changeAmount={props.changeAmount}
         undoBet={props.undoBet}
         lastBet={props.lastBet}
+        repeatBet={props.repeatBet}
+        double={props.double}
+        repeat={props.repeat}
         />
         </div>
         

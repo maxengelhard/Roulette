@@ -5,7 +5,7 @@ import payouts from '../Bets/payouts'
 const LargeTable = (props) => {
     const label = (index) => {
         const value = Object.values(props.bets[index+18])[0]/Object.values(payouts[index+18])
-        if (props.startBetting && value >0) {
+        if (value >0) {
         return <div className='chip'style={{borderRadius: '50%',boxSizing: 'border-box', height: '20px', width: '20px', padding: 'auto', margin: 'auto', background: 'black', fontSize: '10px'}}>{value}</div>
         } else return false
     }
