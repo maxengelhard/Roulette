@@ -1,6 +1,7 @@
 import React from 'react'
 import colors from './Buttons'
 import Undo from './UndoBet'
+import Repeat from './Repeat'
 // import refresh from './refresh-icon.png'
 
 const BetAmount = (props) => {
@@ -18,7 +19,7 @@ const BetAmount = (props) => {
         <div className='betAmount'>
             {betAmounts}
             <Undo undoBet={props.undoBet} disabled={props.lastBet.length > 0}/>
-            {/*<button style={{background: 'red'}}  onClick={() => props.repeat()}><img src={refresh} alt='refresh'/></button>*/}
+            <Repeat repeatBet={props.repeatBet} repeat={props.repeat} double={props.double}/>
         </div>
     )
 }
