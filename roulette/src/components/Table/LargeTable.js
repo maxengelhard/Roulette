@@ -1,12 +1,14 @@
 import React from 'react'
 import payouts from '../Bets/payouts'
+import Cell from './Cell'
 
 
 const LargeTable = (props) => {
     const label = (index) => {
-        const value = Object.values(props.bets[index+18])[0]/Object.values(payouts[index+18])
+
+        const value = Object.values(props.bets[index])[0]/Object.values(payouts[index])
         if (value >0) {
-        return <div className='chip'style={{borderRadius: '50%',boxSizing: 'border-box', height: '20px', width: '20px', padding: 'auto', margin: 'auto', background: 'black', fontSize: '10px'}}>{value}</div>
+        return <div className='chip'>{value}</div>
         } else return false
     }
 
@@ -17,17 +19,147 @@ const LargeTable = (props) => {
         currentNum+=3;
     }
     const table = tableArr.map((num,key) =>  {
-        return (
-           <tr key={key}><td className={`button${num[0]}`}><button onClick={(e) => props.onClick(props.bet,num[0],e)}>{label(num[0]) ? label(num[0]) : num[0]}</button></td><td className={`button${num[1]}`}><button onClick={(e) => props.onClick(props.bet,num[1],e)}>{label(num[1]) ? label(num[1]) : num[1]}</button></td><td className={`button${num[2]}`}><button onClick={(e) => props.onClick(props.bet,num[2],e)}>{label(num[2]) ? label(num[2]) : num[2]}</button></td></tr> 
+        // first need to get the zero row
+        if (key===0) {
+            return (
+            <div key={key} className='row'>
+            <div>
+                <Cell 
+                onClick={props.onClick} 
+                payout1={payouts[17]} 
+                number1={null} 
+                label1={label(17) ? label(17): '' }
+
+                payout2={props.split}
+                number2={`0-${num[0]}`}
+                label2={label(90+num[0]) ? label(90+num[0]) : ''}
+                
+                payout3={props.street}
+                number3={`${num[0]}-${num[1]}-${num[2]}`}
+                label3={label(164+num[0]) ? label(164+num[0]) : ''}
+
+                payout4={props.bet}
+                number4={num[0]}
+                label4= {label(num[0]+19) ? label(num[0]+19) : num[0]}
+                />
+                </div>
+            <div>
+                <Cell 
+                onClick={props.onClick} 
+                payout1={props.trio} 
+                number1={`0-${num[0]}-${num[1]}`} 
+                label1={label(126+num[0]) ? label(126+num[0]) : ''}
+
+                payout2={props.split}
+                number2={`0-${num[1]}`}
+                label2={label(90+num[1]) ? label(90+num[1]) : ''}
+                
+                payout3={props.split}
+                number3={`${num[0]}-${num[1]}`}
+                label3={label(55+num[0]) ? label(55+num[0]) : ''}
+
+                payout4={props.bet}
+                number4={num[1]}
+                label4= {label(num[1]+19) ? label(num[1]+19) : num[1]}
+                />
+            </div>
+            <div>
+                <Cell 
+                onClick={props.onClick} 
+                payout1={props.trio} 
+                number1={`0-${num[1]}-${num[2]}`} 
+                label1={label(126+num[1]) ? label(126+num[1]) : ''}
+
+                payout2={props.split}
+                number2={`0-${num[2]}`}
+                label2={label(90+num[2]) ? label(90+num[2]) : ''}
+                
+                payout3={props.split}
+                number3={`${num[1]}-${num[2]}`}
+                label3={label(55+num[1]) ? label(55+num[1]) : ''}
+
+                payout4={props.bet}
+                number4={num[2]}
+                label4= {label(num[2]+19) ? label(num[2]+19) : num[2]}
+                />
+                </div>
+                </div>
+            )
+        }
+        
+         else return (
+            <div key={key} className='row'>
+            <div>
+                <Cell 
+                onClick={props.onClick} 
+                payout1={props.doubleStreet} 
+                number1={`${(num[0]-3)}-${(num[1]-3)}-${(num[2]-3)}-${num[0]}-${num[1]}-${num[2]}`} 
+                label1={label(176 +(num[0]-1)/3) ? label(176 +(num[0]-1)/3): ''}
+
+                payout2={props.split}
+                number2={`${(num[0]-3)}-${num[0]}`}
+                label2={label(90+num[0]) ? label(90+num[0]) : ''}
+                
+                payout3={props.street}
+                number3={`${num[0]}-${num[1]}-${num[2]}`}
+                label3= {label(165 +(num[0]-1)/3) ? label(165 +(num[0]-1)/3): ''}
+
+                payout4={props.bet}
+                number4={num[0]}
+                label4= {label(num[0]+19) ? label(num[0]+19) : num[0]}
+                />
+            </div>
+            <div>
+                <Cell 
+                onClick={props.onClick} 
+                payout1={props.corner} 
+                number1={`${(num[0]-3)}-${num[0]}-${(num[1]-3)}-${num[1]}`} 
+                label1={label(125+num[0]) ? label(125+num[0]) : ''}
+
+                payout2={props.split}
+                number2={`${(num[1]-3)}-${num[1]}`}
+                label2={label(90+num[1]) ? label(90+num[1]) : ''}
+                
+                payout3={props.split}
+                number3={`${num[0]}-${num[1]}`}
+                label3={label(55+num[0]) ? label(55+num[0]) : ''}
+
+                payout4={props.bet}
+                number4={num[1]}
+                label4= {label(num[1]+19) ? label(num[1]+19) : num[1]}
+                />
+            </div>
+            <div>
+                <Cell 
+                onClick={props.onClick} 
+                payout1={props.corner} 
+                number1={`${(num[1]-3)}-${num[1]}-${(num[2]-3)}-${num[2]}`} 
+                label1={label(125+num[1]) ? label(125+num[1]) : ''}
+
+                payout2={props.split}
+                number2={`${(num[2]-3)}-${num[2]}`}
+                label2={label(90+num[2]) ? label(90+num[2]) : ''}
+                
+                payout3={props.split}
+                number3={`${num[1]}-${num[2]}`}
+                label3={label(55+num[1]) ? label(55+num[1]) : ''}
+
+                payout4={props.bet}
+                number4={num[2]}
+                label4= {label(num[2]+19) ? label(num[2]+19) : num[2]}
+                />
+            </div>
+            </div>
+    
         )
     })
     return (
-            <table> 
-                <tbody>
-    <tr><td className='button0' colSpan='3'><button onClick={(e) => props.onClick(props.bet,0,e)}>{label(0) ? label(0) : 0}</button></td></tr>
-                     {table}
-                </tbody>
-            </table>
+            <div className='largeTable'> 
+                <div className='largeHeader' onClick={() => props.onClick(props.bet,0)}>
+                {label(19) ? label(19) : 0}
+                </div>
+                {table}
+            </div>
     )
 }
 

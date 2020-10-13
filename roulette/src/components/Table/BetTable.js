@@ -8,7 +8,7 @@ const BetTable = (props) =>  {
         const label = (index) => {
             const value = Object.values(props.bets[index])[0]/Object.values(payouts[index])
             if (value >0) {
-            return <div className='chip'style={{borderRadius: '50%', height: '25px', width: '25px', margin: 'auto',padding: 'auto', background: 'black'}}>{value}</div>
+            return <div className='chip' style={{height: '20px', width:'20px', paddingTop: '1px', fontSize: '12px', marginTop:'40%'}}>{value}</div>
             } else return false
         }
 
@@ -30,6 +30,11 @@ const BetTable = (props) =>  {
             onClick={props.onClick} 
             bet={payouts[12]} 
             bets={props.bets}
+            split={payouts[13]}
+            trio={payouts[15]}
+            street={payouts[14]}
+            doubleStreet={payouts[18]}
+            corner={payouts[16]}
             />
             </div>
             <TableCell className='column-1' row='14' column='3/3' label={label(6) ? label(6) : '2 To 1'} bet={payouts[6]} onClick={props.onClick}/>

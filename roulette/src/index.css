@@ -109,9 +109,9 @@ span area {
   height: 10px;
 }
 
-button:focus {
+/* button:focus {
   outline: 0;
-}
+} */
 
 .wrapper {
   height: 450px;
@@ -122,16 +122,11 @@ button:focus {
   margin-bottom: 10px;
 }
 
-
-
-.wrapper > div {
+.wrapper > div:not(.largeTable):not(.largeHeader) {
   border: 1px solid white;
   background-color: green;
 }
 
-.largeTable {
-  border: none !important;
-}
 
 .redDiamond {
   clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
@@ -149,18 +144,60 @@ button:focus {
   height: 90%;
 }
 
-table {
+.largeTable {
   width: 100%;
   height: 100%;
   border-collapse: collapse;
-  table-layout: fixed;
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: repeat(14, 1fr);
+  border-top: 1px solid white;
+  border-right: 1px solid white;
 }
 
-td {
-  border: 1px solid white;
-  margin: 2px;
+.row {
+  display: flex;
 }
 
+.cell {
+  display: grid;
+  grid-template-columns: 5px 55px;
+  grid-template-rows: 5px 27.1px;
+  gap: 0px;
+  font-size: 14px;
+  background-color: green;
+}
+.cell > div {
+  display: block;
+  position: relative;
+  text-align: center;
+  background-color: green;
+  padding: 0;
+  margin: 0;
+  color: white;
+  width: 100%;
+  height: 100%;
+  margin-left: -3px;
+  margin-top: -4px;
+}
+
+.cell >div:hover {
+  filter: brightness(1.25);
+  background-clip: border-box;
+}
+
+.cell >div:nth-of-type(1) {
+  background: linear-gradient(#fff, #fff) no-repeat center/1px 100%;
+  
+}
+.cell > div:nth-of-type(2) {
+  background: linear-gradient(#fff, #fff) no-repeat center/100% 1px;
+  
+}
+.cell > div:nth-of-type(3) {
+  background: linear-gradient(#fff, #fff) no-repeat center/1px 100%;
+  /* border-left: 1px solid white; */
+}
 
 
 .wrapper button {
@@ -221,24 +258,6 @@ td {
   width: 96%;
 }
 
-.playerBets {
-  width: 100px;
-  height: 100%;
-  border: 1px solid red;
-  margin-right: 25px;
-}
-
-.betHeader {
-  width: 100%;
-  text-align: center;
-  font-size: 16px;
-  padding-bottom: 10px;
-  padding-top: 5px;
-}
-
-.bet p {
-  margin: 5px;
-}
 
 .betAmount button {
   border-radius: 50%;
@@ -247,20 +266,37 @@ td {
   color: white;
 }
 
-button img {
-  width: 70%;
-  height: 70%;
-}
 
 .totalBet {
   color: white;
 }
 
 .chip {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  position: relative;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
   border: 2px dotted white;
+  border-radius: 50%;
+  box-sizing: border-box;
+  height: 16px;
+  font-size: 9px;
+  width: 16px;
+  margin: 0;
+  background: black;
+  z-index: 3;
+}
+
+.largeHeader {
+  text-align: center;
+  align-items: center;
+  border-left: 1px solid white;
+  background-color: green;
+  border-top: none;
+}
+
+.largeHeader:hover {
+  filter: brightness(1.25);
 }
 
 

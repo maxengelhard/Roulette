@@ -15,14 +15,64 @@ let payouts = [
     {'Straight Up': 36},
     {'Split Bet':18},
     {'Street Bet':12},
+    {'Trio': 12},
     {'Corner Bet': 9},
-    {'Five Number Bet':7},
-    {'Siz Number Bet':6}
+    {'Four Number Bet':9},
+    {'Double Steet Bet':6}
 ]
 
 
+// single numbers
 while (counter <37) {
     payouts.push({[counter]: 36})
     counter ++
 }
+
+// splt horizontal
+counter =1;
+while (counter <36) {
+    payouts.push({[`${counter}-${counter+1}`]: 18})
+    counter ++
+}
+
+// split vertical
+counter = 1;
+while (counter <=36) {
+    while(counter <4) {
+        payouts.push({[`${0}-${counter}`]: 18})
+        counter++
+    }
+    payouts.push({[`${counter-3}-${counter}`]: 18})
+    counter ++
+}
+
+//trio
+counter=1;
+while (counter<3) {
+    payouts.push({[`${0}-${counter}-${counter+1}`]: 12})
+    counter++
+}
+
+// corner
+counter =1;
+while(counter<=36) {
+    payouts.push({[`${counter}-${counter+3}-${counter+1}-${counter+4}`]: 9})
+    counter++
+}
+
+// street
+counter = 1;
+while (counter <36) {
+    payouts.push({[`${counter}-${counter+1}-${counter+2}`]: 12})
+    counter+=3
+}
+
+// double street
+counter = 1;
+while (counter <36) {
+    payouts.push({[`${counter}-${counter+1}-${counter+2}-${counter+3}-${counter+4}-${counter+5}`]: 6})
+    counter +=3
+}
+
+
 export default payouts
