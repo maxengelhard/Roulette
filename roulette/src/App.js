@@ -25,6 +25,7 @@ class App extends React.Component {
         whoWon: false,
         // for the betting
         bets: payouts.map((obj) => {return {[Object.keys(obj)[0]] : 0}}),
+
         betAmount: 1,
         totalBet: 0,
         // for the balance
@@ -109,7 +110,7 @@ handleClick() {
 
 componentDidUpdate(prevProps, prevState) {
   
-  const table = document.querySelector('.wrapper').querySelectorAll('button,.red,.black')
+  const table = document.querySelector('.wrapper').querySelectorAll('div,.red,.black')
   const undo = document.querySelector('.undo')
   const repeat = document.querySelector('.repeat')
     
@@ -180,21 +181,15 @@ return false
 ////////////// For the betting table
 
 
-makeBet(bet,number,e) {
-  if (e) {
-    const target = e.currentTarget.getBoundingClientRect()
-    const middle = target.x + target.width/2
-    console.log(e.clientX,middle)
-  }
+makeBet(bet,number) {
   this.setState((prevState) => {
       const newBet = (number || number===0) ? number: Object.keys(bet)[0]
+      const value = Object.values(bet)[0]
       const updatedBets = prevState.bets.map((obj,index) => {
           const collector = Object.keys(obj)[0]
-          if (!isNaN(newBet) && newBet.toString() === collector) {
-            return {[collector]: obj[collector] + bet['Straight Up']*this.state.betAmount}
-          }
-          else if (newBet === collector) {
-             return { [collector] : obj[collector] + bet[newBet]*this.state.betAmount }
+          if (newBet.toString() === collector) {
+
+             return { [collector] : obj[collector] + value*this.state.betAmount }
           } 
           else return obj
       })
@@ -320,7 +315,6 @@ render() {
       disableRepeat={this.state.repeat.length >0 ? this.state.repeatTotal > this.state.balance : this.state.totalBet > this.state.balance}
       />
       </div>
-      
     </div>
   );
 }

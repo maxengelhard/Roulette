@@ -8,6 +8,8 @@ const flash = (key) => {
 }
 
 const checkWinner = (num,arr) => {
+    // num is who won
+    // arr is the bets
     // iterate over the arr
         // want to reduce this to a number
         return arr.reduce((acum, obj) => {
@@ -22,69 +24,83 @@ const checkWinner = (num,arr) => {
                 flash('red')
             } 
             // check if black
-            if (key === 'Black' && numbers.indexOf(num)%2===1) {
+             if (key === 'Black' && numbers.indexOf(num)%2===1) {
                 acum += value
                 flash('black')
             } 
 
             // check if even
-            if (key ==='Even' && num%2===0) {
+             if (key ==='Even' && num%2===0) {
                 acum += value
                 flash('even')
             }
             // check if odd
-            if (key === 'Odd' && num%2===1) {
+             if (key === 'Odd' && num%2===1) {
                 acum += value
                 flash('odd')
             }
             // check if 1-18
-            if (key === 'Low' && num <=18) {
+             if (key === 'Low' && num <=18) {
                 acum += value
                 flash('low')
             }
             // check if high
-            if (key === 'High' && num >=19) {
+             if (key === 'High' && num >=19) {
                 acum += value
                 flash('high')
             }
             // first dozen
-            if (key === 'First Dozen' && num <=12) {
+             if (key === 'First Dozen' && num <=12) {
                 acum += value
                 flash('firstDozen')
             }
             // Second Dozen
-            if (key === 'Second Dozen' && num>=13 && num <=24) {
+             if (key === 'Second Dozen' && num>=13 && num <=24) {
                 acum += value
                 flash('secondDozen')
             }
             // third dozen
-            if (key === 'Third Dozen' && num >=25) {
+             if (key === 'Third Dozen' && num >=25) {
                 acum += value
                 flash('thirdDozen')
             }
             // first coulumn
-            if (key === 'Column-1' && (num-1)%3===0) {
+             if (key === 'Column-1' && (num-1)%3===0) {
                 acum += value
                 flash('column-1')
             }
             //second coulmn
-            if (key === 'Column-2' && (num-2)%3===0) {
+             if (key === 'Column-2' && (num-2)%3===0) {
                 acum += value
                 flash('column-2')
             }
             // third coulmn
-            if (key === 'Coulmn-3' && (num-3)%3===0) {
+             if (key === 'Coulmn-3' && (num-3)%3===0) {
                 acum += value
                 flash('column-3')
             }
             // check if they hit the number
             if (key ===num) {
                 acum += value
-                flash(`button${key}`)
+                flash(`cell${key}`)
             }
+            // to check if they hit an split / corner // street // double street
+            else if (isNaN(key) ) {
+                // split the key on a '-'
+                const or = key.split('-')
+                if (or.indexOf(num) !== -1) {
+                    acum +=value
+                flash(`cell${key}`)
+                }
+                
+            }
+            
         } else if (key ===num) {
             acum += value
-            flash(`button${key}`)
+            flash(`cell${key}`)
+        } else if (key === 'Four Number Bet') {
+                acum +=value
+                flash(`cell${key}`)
         }
     }
 
