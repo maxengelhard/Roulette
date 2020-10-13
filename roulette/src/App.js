@@ -56,6 +56,7 @@ handleClick() {
             disabled: true,
             degWheel: Math.floor(5000 + Math.random()*5000),
             degBall: Math.floor(2500 + Math.random()*2500),
+            lastBet: [],
         }
     })
     // create a new promise to wait for when it is finished spinning
@@ -89,7 +90,6 @@ handleClick() {
                     whoWon: false,
                     bets: payouts.map((obj) => {return {[Object.keys(obj)[0]] : 0}}),
                     totalBet: 0,
-                    lastBet: [],
                     repeat: prevState.bets,
                     repeatTotal: sumTotal(prevState.bets,payouts),
                     repeatLastBet: prevState.lastBet
@@ -170,6 +170,10 @@ componentDidUpdate(prevProps, prevState) {
   }
 } else {
   table.forEach(button => button.style.pointerEvents = 'auto')
+  undo.style.pointerEvents = 'auto'
+} 
+
+if (this.state.lastBet !== prevState.lastBet) {
   undo.style.pointerEvents = 'auto'
 }
 

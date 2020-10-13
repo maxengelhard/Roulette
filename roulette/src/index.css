@@ -109,9 +109,9 @@ span area {
   height: 10px;
 }
 
-/* button:focus {
+button:focus {
   outline: 0;
-} */
+}
 
 .wrapper {
   height: 450px;
@@ -310,6 +310,29 @@ span area {
 
 .betControl > div {
   margin-right: 10px;
+}
+
+.undo {
+  background-color: black;
+  color: white;
+}
+
+.repeat {
+  background-color: blue;
+  color: white;
+}
+
+.double {
+  animation: double .5s linear infinite;
+}
+
+@keyframes double {
+  0% {
+    border: 3px solid red;
+  }
+  50% {
+    border: 3px solid black;
+  }
 }
 
 .won {

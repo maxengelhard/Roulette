@@ -8,7 +8,11 @@ const BetTable = (props) =>  {
         const label = (index) => {
             const value = Object.values(props.bets[index])[0]/Object.values(payouts[index])
             if (value >0) {
-            return <div className='chip' style={{height: '20px', width:'20px', paddingTop: '1px', fontSize: '12px', marginTop:'40%'}}>{value}</div>
+                if (index ===6 || index===7 || index===8) {
+                    return <div className='chip' style={{transform: 'translate(-50%,0%)'}}>{value}</div>
+                } else {
+                    return <div className='chip' style={{height: '20px', width:'20px', paddingTop: '1px', fontSize: '12px', marginTop:'40%'}}>{value}</div>
+                }
             } else return false
         }
 
