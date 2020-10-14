@@ -294,7 +294,6 @@ double() {
 }
 
 render() {
-    console.log(this.state.lastBet)
   return (
     <div>
       <Header />
