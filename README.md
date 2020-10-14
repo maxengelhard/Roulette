@@ -32,3 +32,9 @@ All payouts are calculated based on standard roulette rules.
 Storage: 
 
 Your balance and only your balance is stored in a localStorage. This is calculated only when a spin is complete or when you first join. If you make bets and leave the page your bets will be cleared and the balance will be restored to where it was before you made those bets.
+
+How To Play Yourself:
+
+I have hosted this app on netlify. 
+
+Feel free to play for fun at this link here https://roullete-app-487adb.netlify.app/
