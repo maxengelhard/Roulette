@@ -179,6 +179,7 @@ button:focus {
   height: 100%;
   margin-left: -3px;
   margin-top: -4px;
+  cursor: pointer;
 }
 
 .cell >div:hover {
@@ -324,6 +325,7 @@ button:focus {
 
 .double {
   animation: double .5s linear infinite;
+  box-sizing: border-box;
 }
 
 @keyframes double {
