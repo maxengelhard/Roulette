@@ -54,6 +54,7 @@ const BetTable = (props) =>  {
         double={props.double}
         repeat={props.repeat}
         disableRepeat={props.disableRepeat}
+        spinning={props.spinning}
         />
         </div>
         

@@ -11,6 +11,7 @@ import sumTotal from './components/Bets/sumTotal'
 
 
 class App extends React.Component {
+
   constructor() {
     super()
     this.state = {
@@ -29,7 +30,7 @@ class App extends React.Component {
         betAmount: 1,
         totalBet: 0,
         // for the balance
-        balance: 1000,
+        balance: 0,
         // for undo
         lastBet: [],
         // for repeat
@@ -45,6 +46,18 @@ class App extends React.Component {
     this.double = this.double.bind(this)
 }
 
+componentDidMount() {
+  const storedBalance = localStorage.getItem('balance')
+  if (localStorage.getItem('balance')) {
+    this.setState({
+      balance: storedBalance
+    })
+  } else {
+    this.setState({
+      balance: 1000
+    })
+  }
+}
 
 /////////////// For the spinning wheel
 
@@ -56,7 +69,6 @@ handleClick() {
             disabled: true,
             degWheel: Math.floor(5000 + Math.random()*5000),
             degBall: Math.floor(2500 + Math.random()*2500),
-            lastBet: [],
         }
     })
     // create a new promise to wait for when it is finished spinning
@@ -79,6 +91,8 @@ handleClick() {
     const reset = () => {
         setTimeout(() => {
             this.setState(prevState => {
+              localStorage.setItem('balance', prevState.balance)
+              localStorage.setItem('date', Date.now())
                 return {
                     ...prevState,
                     spinning: false,
@@ -93,7 +107,6 @@ handleClick() {
                     repeat: prevState.bets,
                     repeatTotal: sumTotal(prevState.bets,payouts),
                     repeatLastBet: prevState.lastBet
-                    
                 }
             })
         }, 5000)};
@@ -107,6 +120,8 @@ handleClick() {
     asyncCall()
     
 }
+
+
 
 componentDidUpdate(prevProps, prevState) {
   
@@ -152,6 +167,7 @@ componentDidUpdate(prevProps, prevState) {
 // check to see if the bet amount is more than the balance
  else if (this.state.betAmount !== prevState.betAmount || this.state.balance !== prevState.balance || this.state.spinning !== prevState.spinning) {
   const wagers = document.querySelector(`.betAmount`).querySelectorAll('button:not(.undo):not(.repeat)')
+  undo.style.pointerEvents = 'auto'
   if (this.state.betAmount > this.state.balance) {
     table.forEach(button => button.style.pointerEvents = 'none')
     wagers.forEach(button => {
@@ -172,10 +188,6 @@ componentDidUpdate(prevProps, prevState) {
   table.forEach(button => button.style.pointerEvents = 'auto')
   undo.style.pointerEvents = 'auto'
 } 
-
-if (this.state.lastBet !== prevState.lastBet) {
-  undo.style.pointerEvents = 'auto'
-}
 
 
 return false
@@ -282,6 +294,7 @@ double() {
 }
 
 render() {
+    console.log(this.state.lastBet)
   return (
     <div>
       <Header />
@@ -315,6 +328,7 @@ render() {
       repeatBet={this.repeatBet}
       double={this.double}
       repeat={this.state.repeat.length >0}
+      spinning={this.state.spinning}
       // check if we're repeating if we are pass down if the repeat Total is more than the balance : else see if double is more than balance
       disableRepeat={this.state.repeat.length >0 ? this.state.repeatTotal > this.state.balance : this.state.totalBet > this.state.balance}
       />
